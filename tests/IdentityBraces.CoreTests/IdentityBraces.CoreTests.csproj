@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Links sources directly rather than referencing the VSIX project. Everything linked here
+    is free of Visual Studio types, so it runs on a plain .NET runtime with no Visual Studio,
+    no VSSDK workload and no editor host. Run with `dotnet run`.
+
+    WPF is enabled because GlyphMetrics and CatgirlLayout measure real fonts through
+    FormattedText — and the line-transform purity test is only meaningful against real
+    font metrics.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>disable</Nullable>
+    <AssemblyName>IdentityBraces.CoreTests</AssemblyName>
+    <RootNamespace>IdentityBraces.CoreTests</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>CS0649;CS0169</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\Hash.cs" Link="Core\Hash.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\BraceKind.cs" Link="Core\BraceKind.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\BraceInfo.cs" Link="Core\BraceInfo.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitLayer.cs" Link="Core\TraitLayer.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitIds.cs" Link="Core\TraitIds.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitCatalog.cs" Link="Core\TraitCatalog.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitRoll.cs" Link="Core\TraitRoll.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitTable.cs" Link="Core\TraitTable.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitPresets.cs" Link="Core\TraitPresets.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\TraitSampler.cs" Link="Core\TraitSampler.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\SceneCasting.cs" Link="Core\SceneCasting.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\BraceNames.cs" Link="Core\BraceNames.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\ScanSettings.cs" Link="Core\ScanSettings.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\BraceScanner.cs" Link="Core\BraceScanner.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Core\BraceMap.cs" Link="Core\BraceMap.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Classification\BracePalette.cs" Link="Classification\BracePalette.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Options\BraceColorMode.cs" Link="Options\BraceColorMode.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Options\StockingStyle.cs" Link="Options\StockingStyle.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Options\IdentityBracesSettings.cs" Link="Options\IdentityBracesSettings.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Adornments\GlyphMetrics.cs" Link="Adornments\GlyphMetrics.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Adornments\GlyphContext.cs" Link="Adornments\GlyphContext.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Adornments\PreviewMetrics.cs" Link="Adornments\PreviewMetrics.cs" />
+    <Compile Include="..\..\src\IdentityBraces\Adornments\CatgirlLayout.cs" Link="Adornments\CatgirlLayout.cs" />
+  </ItemGroup>
+
+</Project>

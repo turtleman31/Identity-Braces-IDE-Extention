@@ -1,0 +1,14 @@
+# The published extension is just out/ and the manifest. Everything below is how it is made.
+src/**
+test/**
+tools/**
+design/**
+node_modules/**
+out/test/**
+out/**/*.map
+.vscode/**
+.gitignore
+.vscodeignore
+tsconfig.json
+package-lock.json
+*.vsix

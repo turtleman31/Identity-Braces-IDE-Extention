@@ -1,0 +1,5 @@
+node_modules/
+out/
+*.vsix
+tools/parity/bin/
+tools/parity/obj/

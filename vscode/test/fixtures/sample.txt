@@ -1,0 +1,78 @@
+// A corpus for the parity check: every lexer hazard in the scanner, plus enough ordinary
+// nesting that the identity, colour and trait rolls all get exercised.
+using System;
+
+namespace Sample
+{
+    public class Orders
+    {
+        // A line comment with braces in it: { } ( ) [ ]
+        /* A block comment
+           spanning lines with { } inside */
+
+        private readonly string _verbatim = @"a verbatim { string "" with doubled quotes }";
+        private readonly string _interp = $"an interpolated {hole} that is opaque";
+        private readonly string _both = $@"both prefixes {here} too";
+        private readonly string _raw = """
+            a raw string { with braces } across lines
+            """;
+
+        public async Task<Order> GetOrderAsync(int id)
+        {
+            if (id < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(id));
+            }
+
+            var items = new List<Item>
+            {
+                new Item { Sku = "a[0]", Qty = 1 },
+                new Item { Sku = "b{1}", Qty = 2 },
+            };
+
+            char open = '{';
+            char close = '}';
+            char escaped = '\'';
+
+            return await _store.FindAsync(id, items, open, close, escaped);
+        }
+
+        public void Deeply()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                while (true)
+                {
+                    if (i % 2 == 0)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                            {
+                                Console.WriteLine("zero");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void Same() { }
+        public void Same2() { }
+    }
+}
+
+// JavaScript, so the template-literal and single-quote paths are hit too.
+const build = (rows) => {
+    const label = `row ${rows.length} of {many}`;
+    const single = 'a string with { and } in it';
+    const lifetime = "not a lifetime, but this is: &'a str";
+    return rows.map((r, i) => ({ id: r.id, label, index: i }));
+};
+
+function unbalanced() {
+    const a = [1, 2, 3];
+    if (a.length) {
+        return a.map((x) => x * 2);
+    // deliberately unclosed, so the unmatched path has something to question

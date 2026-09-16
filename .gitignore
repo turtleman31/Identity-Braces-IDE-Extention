@@ -1,0 +1,16 @@
+# Build output
+bin/
+obj/
+*.user
+*.suo
+
+# VSIX build artifacts
+*.vsix
+extension.vsixmanifest
+
+# Visual Studio
+.vs/
+
+# NuGet
+packages/
+*.nupkg

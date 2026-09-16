@@ -1,0 +1,97 @@
+# Builds both extensions and runs both test suites on every push and pull request.
+# Every run uploads the two VSIX files as artifacts (Actions tab -> the run -> Artifacts),
+# so nobody needs a Visual Studio build setup just to try it.
+#
+# Pushing a tag that starts with "v" (git tag v1.0.0 && git push origin v1.0.0) additionally
+# creates a GitHub Release with both VSIX files attached.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  visual-studio:
+    name: Visual Studio extension
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The VSIX build needs MSBuild plus the Microsoft.VSSDK.BuildTools NuGet package, which
+      # restore brings in. No "Visual Studio extension development" workload is required.
+      - uses: microsoft/setup-msbuild@v2
+
+      # The core tests target net8.0-windows.
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: msbuild IdentityBraces.sln -t:Restore -p:Configuration=Release
+
+      # DeployExtension=false stops the VSSDK targets from trying to install the build into
+      # an experimental Visual Studio instance, which only makes sense on a developer machine.
+      - name: Build VSIX
+        run: msbuild IdentityBraces.sln -p:Configuration=Release -p:DeployExtension=false
+
+      - name: Core tests
+        run: dotnet run -c Release
+        working-directory: tests/IdentityBraces.CoreTests
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: IdentityBraces-VisualStudio
+          path: src/IdentityBraces/bin/Release/IdentityBraces.vsix
+          if-no-files-found: error
+
+  vscode:
+    name: VS Code extension
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vscode
+    steps:
+      - uses: actions/checkout@v4
+
+      # `node --test` with a glob pattern needs Node 21+.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: vscode/package-lock.json
+
+      - run: npm ci
+
+      - name: Tests
+        run: npm test
+
+      - name: Package VSIX
+        run: npm run package
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: IdentityBraces-VSCode
+          path: vscode/*.vsix
+          if-no-files-found: error
+
+  release:
+    name: GitHub release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [visual-studio, vscode]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: Create release with both VSIX files attached
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.vsix --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes

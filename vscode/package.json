@@ -1,0 +1,311 @@
+{
+  "name": "identity-braces",
+  "displayName": "Identity Braces",
+  "description": "Every brace gets its own colour, and a few of them develop personalities.",
+  "version": "1.0.0",
+  "publisher": "identitybraces",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention.git",
+    "directory": "vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention/issues"
+  },
+  "homepage": "https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention/tree/main/vscode#readme",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "braces",
+    "brackets",
+    "rainbow",
+    "colour",
+    "catgirl"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "identityBraces.toggle",
+        "title": "Identity Braces: Toggle"
+      },
+      {
+        "command": "identityBraces.applyPreset",
+        "title": "Identity Braces: Apply a trait preset"
+      },
+      {
+        "command": "identityBraces.openGallery",
+        "title": "Identity Braces: Open the trait gallery"
+      },
+      {
+        "command": "identityBraces.toggleMotion",
+        "title": "Identity Braces: Toggle motion"
+      },
+      {
+        "command": "identityBraces.whoIsThis",
+        "title": "Identity Braces: Identify the brace at the cursor"
+      },
+      {
+        "command": "identityBraces.importFromVisualStudio",
+        "title": "Identity Braces: Import settings from Visual Studio"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Identity Braces",
+        "properties": {
+          "identityBraces.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Master switch."
+          },
+          "identityBraces.independentBraces": {
+            "type": "boolean",
+            "default": true,
+            "order": 1,
+            "markdownDescription": "**Every brace is its own person.** A closing brace gets its own colour and personality instead of inheriting its opener's. Turn off to make pairs match again."
+          },
+          "identityBraces.curly": {
+            "type": "boolean",
+            "default": true,
+            "order": 2,
+            "description": "Colour curly braces { }."
+          },
+          "identityBraces.round": {
+            "type": "boolean",
+            "default": true,
+            "order": 3,
+            "description": "Colour parentheses ( ). Turn off if the density is too much."
+          },
+          "identityBraces.square": {
+            "type": "boolean",
+            "default": true,
+            "order": 4,
+            "description": "Colour square brackets [ ]."
+          },
+          "identityBraces.questionUnmatched": {
+            "type": "boolean",
+            "default": true,
+            "order": 5,
+            "description": "A brace with no partner always renders as ?. Doubles as a syntax-error hint."
+          },
+          "identityBraces.colorMode": {
+            "type": "string",
+            "enum": [
+              "palette",
+              "monochrome",
+              "depth"
+            ],
+            "enumDescriptions": [
+              "The 32 identity colours.",
+              "One colour for every brace, following the theme.",
+              "One colour per nesting level - this is what a rainbow-brace extension does."
+            ],
+            "default": "palette",
+            "order": 6,
+            "description": "How a brace's colour is decided."
+          },
+          "identityBraces.monochromeColor": {
+            "type": "string",
+            "default": "",
+            "order": 7,
+            "description": "Colour used in monochrome mode, as #RRGGBB. Empty follows the theme."
+          },
+          "identityBraces.palette": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "order": 8,
+            "markdownDescription": "Override the 32 identity colours, as `#RRGGBB` strings. Fewer than 32 entries fills the rest from the built-in palette; an empty array uses the built-in palette throughout."
+          },
+          "identityBraces.scopeSpotlight": {
+            "type": "boolean",
+            "default": false,
+            "order": 9,
+            "description": "The pair enclosing the caret stays vivid; every other brace fades."
+          },
+          "identityBraces.spotlightDim": {
+            "type": "number",
+            "default": 30,
+            "minimum": 0,
+            "maximum": 100,
+            "order": 10,
+            "description": "How visible an out-of-scope brace stays, as a percentage."
+          },
+          "identityBraces.complexityWarningDepth": {
+            "type": "number",
+            "default": 0,
+            "minimum": 0,
+            "maximum": 64,
+            "order": 11,
+            "description": "Braces nested at least this deep are drawn sweating and unsteady. Zero switches it off."
+          },
+          "identityBraces.indentGuides": {
+            "type": "boolean",
+            "default": false,
+            "order": 12,
+            "description": "A vertical guide down the inside of each multi-line pair, in that pair's colour."
+          },
+          "identityBraces.indentGuideStrength": {
+            "type": "number",
+            "default": 45,
+            "minimum": 5,
+            "maximum": 100,
+            "order": 13,
+            "description": "How strong the indent guides are against the background, as a percentage."
+          },
+          "identityBraces.enableMotion": {
+            "type": "boolean",
+            "default": true,
+            "order": 14,
+            "markdownDescription": "**Turn this off** on battery, on a projector, or if movement in a text editor is unpleasant. Animated braces go static."
+          },
+          "identityBraces.animationFrameRate": {
+            "type": "number",
+            "default": 15,
+            "minimum": 1,
+            "maximum": 60,
+            "order": 15,
+            "description": "Frames per second for animated braces. The editor does not need 60."
+          },
+          "identityBraces.colorCycleSeconds": {
+            "type": "number",
+            "default": 6,
+            "minimum": 1,
+            "maximum": 120,
+            "order": 16,
+            "description": "Time in seconds for an animated brace to travel the whole colour wheel."
+          },
+          "identityBraces.maxFileLength": {
+            "type": "number",
+            "default": 1000000,
+            "minimum": 0,
+            "order": 17,
+            "description": "Files longer than this many characters are left alone entirely."
+          },
+          "identityBraces.decorScale": {
+            "type": "number",
+            "default": 1,
+            "minimum": 0.4,
+            "maximum": 2,
+            "order": 18,
+            "description": "Multiplier for creature and costume geometry. Below 1 keeps ears closer to the line."
+          },
+          "identityBraces.thighHighStyle": {
+            "type": "string",
+            "enum": [
+              "off",
+              "twotone",
+              "garter",
+              "banded"
+            ],
+            "enumDescriptions": [
+              "No stockings. Ears only.",
+              "Clearest - nothing on it is under 5px.",
+              "One welt stripe. The legibility floor.",
+              "Two stripes. Correct at larger font sizes."
+            ],
+            "default": "garter",
+            "order": 19,
+            "description": "How much stripe detail the thigh highs carry."
+          },
+          "identityBraces.tail": {
+            "type": "boolean",
+            "default": true,
+            "order": 20,
+            "description": "A tail curling off the bottom right of a cat brace. It is what makes the glyph read as a creature."
+          },
+          "identityBraces.overlayNudge": {
+            "type": "number",
+            "default": 0,
+            "minimum": -1,
+            "maximum": 1,
+            "order": 20.5,
+            "markdownDescription": "Moves everything drawn on a brace up or down, in `em`. Only needed if your editor font puts a brace's ink somewhere other than where we assume: negative raises the ears, positive lowers them."
+          },
+          "identityBraces.renderMode": {
+            "type": "string",
+            "enum": [
+              "full",
+              "text",
+              "plain"
+            ],
+            "enumDescriptions": [
+              "Colours, glyph substitutions and drawn creatures.",
+              "Colours and glyph substitutions only. No drawn overlays.",
+              "Colours only."
+            ],
+            "default": "full",
+            "order": 21,
+            "markdownDescription": "How much of a brace is drawn. Drop to `text` or `plain` if overlays misbehave on your build of VS Code."
+          },
+          "identityBraces.languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [
+              "*"
+            ],
+            "order": 22,
+            "markdownDescription": "Language ids to colour. A single `*` means every language. The scanner is a C-family lexer, so it is at its best on C-family syntax."
+          },
+          "identityBraces.traits": {
+            "type": "object",
+            "default": {},
+            "order": 23,
+            "additionalProperties": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "markdownDescription": "Per-trait percentages, keyed by trait id - for example `{ \"catgirl\": 12, \"wizard\": 5 }`. Anything not listed keeps its catalogue default. Easier to edit through **Identity Braces: Open the trait gallery**."
+          }
+        }
+      }
+    ],
+    "colors": [
+      {
+        "id": "identityBraces.monochrome",
+        "description": "Brace colour used in monochrome mode when no explicit colour is set.",
+        "defaults": {
+          "dark": "#C8A2E8",
+          "light": "#7A4FB0",
+          "highContrast": "#FFFFFF",
+          "highContrastLight": "#000000"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "test": "tsc -p ./ && node --test \"out/test/*.test.js\"",
+    "bestiary": "tsc -p ./ && node tools/bestiary.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.75.0",
+    "@vscode/vsce": "^3.9.2",
+    "typescript": "^5.4.0"
+  }
+}
