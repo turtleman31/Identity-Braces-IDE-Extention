@@ -1,5 +1,9 @@
 # Identity Braces for VS Code
 
+> **Transparency:** made by [Claude](https://claude.ai), Anthropic's AI model, from
+> [turtleman31](https://github.com/turtleman31)'s idea. The full note is at the top of the
+> [main README](https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention#readme).
+
 A port of **Identity Braces**, the Visual Studio extension, to VS Code. The fuller account of
 what it is and why — the identity hashing, the trait catalogue, the WPF adornment layer — is
 in that extension's own README, one directory up at `../README.md`.

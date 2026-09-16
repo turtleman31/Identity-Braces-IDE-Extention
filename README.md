@@ -1,5 +1,9 @@
 # Identity Braces
 
+> **Transparency:** this project was made by [Claude](https://claude.ai), Anthropic's AI model,
+> working in Claude Code. The idea is [turtleman31](https://github.com/turtleman31)'s; the
+> code, the tests, the VS Code port and this README were written by Claude.
+
 A Visual Studio extension for **VS 2022** and **VS 2026** — and a [VS Code port](vscode/README.md)
 that gives the same brace the same colour, name and personality in both editors.
 
