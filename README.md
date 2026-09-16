@@ -54,7 +54,7 @@ experimental instance for debugging).
 ### Option 1 — double-click the VSIX (easiest, handles both VS versions)
 
 Download `IdentityBraces.vsix` from the
-[latest release](https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention/releases/latest),
+[latest release](https://github.com/turtleman31/Identity-Braces-IDE-Extention/releases/latest),
 or build it yourself (see below) and find it at:
 
 ```
@@ -146,11 +146,11 @@ how that is asserted rather than hoped for.
 ## Build from source
 
 ```bash
-git clone https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention.git
+git clone https://github.com/turtleman31/Identity-Braces-IDE-Extention.git
 ```
 
 ```bash
-cd Identity-Braces-Visual-Studio-Extention
+cd Identity-Braces-IDE-Extention
 ```
 
 ```bash

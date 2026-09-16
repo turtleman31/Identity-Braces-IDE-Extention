@@ -7,13 +7,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention.git",
+    "url": "https://github.com/turtleman31/Identity-Braces-IDE-Extention.git",
     "directory": "vscode"
   },
   "bugs": {
-    "url": "https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention/issues"
+    "url": "https://github.com/turtleman31/Identity-Braces-IDE-Extention/issues"
   },
-  "homepage": "https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention/tree/main/vscode#readme",
+  "homepage": "https://github.com/turtleman31/Identity-Braces-IDE-Extention/tree/main/vscode#readme",
   "engines": {
     "vscode": "^1.75.0"
   },

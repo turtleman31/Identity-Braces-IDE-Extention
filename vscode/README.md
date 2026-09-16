@@ -2,7 +2,7 @@
 
 > **Transparency:** made by [Claude](https://claude.ai), Anthropic's AI model, from
 > [turtleman31](https://github.com/turtleman31)'s idea. The full note is at the top of the
-> [main README](https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention#readme).
+> [main README](https://github.com/turtleman31/Identity-Braces-IDE-Extention#readme).
 
 A port of **Identity Braces**, the Visual Studio extension, to VS Code. The fuller account of
 what it is and why — the identity hashing, the trait catalogue, the WPF adornment layer — is
@@ -62,7 +62,7 @@ cd vscode/tools/parity && dotnet run -c Release
 ## Install
 
 The quick way: download `identity-braces-<version>.vsix` from the
-[latest release](https://github.com/turtleman31/Identity-Braces-Visual-Studio-Extention/releases/latest)
+[latest release](https://github.com/turtleman31/Identity-Braces-IDE-Extention/releases/latest)
 and run `code --install-extension <that file>`.
 
 To build it yourself, from the repository root:
