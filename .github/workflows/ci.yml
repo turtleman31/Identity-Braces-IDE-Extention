@@ -2,15 +2,15 @@
 # Every run uploads the two VSIX files and the JetBrains plugin zip as artifacts (Actions tab
 # -> the run -> Artifacts), so nobody needs a Visual Studio build setup just to try it.
 #
-# Pushing a tag that starts with "v" (git tag v1.0.0 && git push origin v1.0.0) additionally
-# creates a GitHub Release with all three attached.
+# Pushing any tag (git tag v1.2.2 && git push origin v1.2.2 — with or without the "v")
+# additionally creates a GitHub Release with all three attached.
 
 name: CI
 
 on:
   push:
     branches: [main]
-    tags: ['v*']
+    tags: ['**']
   pull_request:
   workflow_dispatch:
 
@@ -110,7 +110,7 @@ jobs:
 
   release:
     name: GitHub release
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/')
     needs: [visual-studio, vscode, jetbrains]
     runs-on: ubuntu-latest
     permissions:
