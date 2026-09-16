@@ -1,0 +1,85 @@
+<idea-plugin>
+    <id>com.github.turtleman31.identitybraces</id>
+    <name>Identity Braces</name>
+    <vendor url="https://github.com/turtleman31/Identity-Braces-IDE-Extention">turtleman31</vendor>
+
+    <description><![CDATA[
+        Every brace gets its own colour out of 32, and a few of them develop personalities.
+        <br><br>
+        Rainbow-brace plugins make a matching pair share a colour, so code is easier to read.
+        Identity Braces does the opposite: a brace's colour, name and personality are a stable
+        hash of the line that declares it, so the same brace is the same person every time you
+        open the file &mdash; and in Visual Studio and VS Code too, where the same extension exists.
+        <br><br>
+        Eighty-six traits: cat ears and thigh highs, wizard hats, a brace that flees the caret,
+        one that sulks when the build fails, one that occasionally flips a table into the empty
+        space beside it. Colour by nesting depth, a scope spotlight and coloured indent guides
+        are there for anyone who would like some of the readability back.
+        <br><br>
+        The file on disk is never modified. A brace drawn as <code>?</code> is still a
+        <code>{</code> in the document; everything here is a rendering-layer illusion.
+        <br><br>
+        Works in every JetBrains IDE: IntelliJ IDEA, Rider, CLion, WebStorm, PyCharm, GoLand
+        and the rest. The scanner is its own C-family lexer, so it needs no language plugin.
+    ]]></description>
+
+    <!-- The platform editor and the lang module every JetBrains IDE ships — never a language
+         plugin. The scanner is its own lexer, which is what lets one build run everywhere. -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <projectListeners>
+        <listener class="identitybraces.editor.BuildTaskListener"
+                  topic="com.intellij.task.ProjectTaskListener"/>
+        <listener class="identitybraces.editor.RunConfigurationListener"
+                  topic="com.intellij.execution.ExecutionListener"/>
+    </projectListeners>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <editorFactoryListener implementation="identitybraces.editor.BraceEditorFactoryListener"/>
+
+        <applicationConfigurable parentId="editor"
+                                 id="identitybraces.general"
+                                 displayName="Identity Braces"
+                                 instance="identitybraces.settings.IdentityBracesConfigurable"/>
+        <applicationConfigurable parentId="identitybraces.general"
+                                 id="identitybraces.traits"
+                                 displayName="Traits"
+                                 instance="identitybraces.settings.TraitsConfigurable"/>
+
+        <colorSettingsPage implementation="identitybraces.settings.IdentityBracesColorSettingsPage"/>
+    </extensions>
+
+    <actions>
+        <group id="identitybraces.menu" text="Identity Braces" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+
+            <action id="identitybraces.toggle"
+                    class="identitybraces.actions.ToggleEnabledAction"
+                    text="Enabled"
+                    description="Every brace is its own person, or none of them are."/>
+            <action id="identitybraces.toggleMotion"
+                    class="identitybraces.actions.ToggleMotionAction"
+                    text="Motion"
+                    description="Colours stay, movement stops."/>
+            <separator/>
+            <action id="identitybraces.preset"
+                    class="identitybraces.actions.ApplyPresetAction"
+                    text="Apply a Trait Preset..."
+                    description="Off, Default, Menagerie, Restless or Unusable."/>
+            <action id="identitybraces.traits"
+                    class="identitybraces.actions.OpenTraitsAction"
+                    text="Traits..."
+                    description="The eighty-six sliders."/>
+            <action id="identitybraces.whoIsThis"
+                    class="identitybraces.actions.WhoIsThisAction"
+                    text="Identify the Brace at the Caret"
+                    description="Name, identity hash, colour, depth and every trait it rolled."/>
+            <separator/>
+            <action id="identitybraces.importFromVisualStudio"
+                    class="identitybraces.actions.ImportFromVisualStudioAction"
+                    text="Import Settings from Visual Studio"
+                    description="Reads the Visual Studio extension's settings.ini and applies the equivalents here."/>
+        </group>
+    </actions>
+</idea-plugin>
