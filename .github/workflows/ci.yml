@@ -121,7 +121,20 @@ jobs:
           path: dist
           merge-multiple: true
 
-      - name: Create release with the VSIX files and the plugin zip attached
+      # Creates the release. If one already exists for this tag — a re-run, or a tag that was
+      # moved — its assets are replaced with this build's instead of failing, so a release
+      # always reflects the last successful run for its tag.
+      - name: Create or update the release with the VSIX files and the plugin zip attached
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/*.vsix dist/*.zip --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes
+          TAG: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+            for asset in $(gh release view "$TAG" --repo "$REPO" --json assets --jq '.assets[].name'); do
+              gh release delete-asset "$TAG" "$asset" --repo "$REPO" --yes
+            done
+            gh release upload "$TAG" dist/*.vsix dist/*.zip --repo "$REPO"
+          else
+            gh release create "$TAG" dist/*.vsix dist/*.zip --repo "$REPO" --title "$TAG" --generate-notes
+          fi
