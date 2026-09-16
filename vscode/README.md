@@ -80,7 +80,7 @@ npx @vscode/vsce package
 ```
 
 ```bash
-code --install-extension identity-braces-1.0.0.vsix
+code --install-extension identity-braces-1.2.0.vsix
 ```
 
 Open any C-family file. Braces should be colourful immediately.
