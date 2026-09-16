@@ -2,10 +2,12 @@
 
 > **Transparency:** this project was made by [Claude](https://claude.ai), Anthropic's AI model,
 > working in Claude Code. The idea is [turtleman31](https://github.com/turtleman31)'s; the
-> code, the tests, the VS Code port and this README were written by Claude.
+> code, the tests, the VS Code and JetBrains ports and this README were written by Claude.
 
-A Visual Studio extension for **VS 2022** and **VS 2026** — and a [VS Code port](vscode/README.md)
-that gives the same brace the same colour, name and personality in both editors.
+A Visual Studio extension for **VS 2022** and **VS 2026** — with a [VS Code port](vscode/README.md)
+and a [JetBrains port](jetbrains/README.md) (IntelliJ IDEA, Rider, CLion, WebStorm, PyCharm,
+GoLand and the rest) that give the same brace the same colour, name and personality in every
+editor.
 
 Rainbow-brace extensions make a matching pair share a colour, so code is easier to read.
 Identity Braces does the opposite. Every brace gets its own colour out of 32, and a few
@@ -134,12 +136,14 @@ IdentityBraces.sln               the Visual Studio extension
 src/IdentityBraces/              its source — see Architecture below for what is inside
 tests/IdentityBraces.CoreTests/  checks on the editor-independent core; runs on plain .NET
 vscode/                          the VS Code port, with its own README, package.json and tests
-.github/workflows/ci.yml         builds both extensions and runs both suites on every push
+jetbrains/                       the JetBrains port, with its own README, Gradle build and tests
+.github/workflows/ci.yml         builds all three and runs every suite on every push
 ```
 
-The two extensions share no build step, but they must agree bit for bit on what a brace's
+The three extensions share no build step, but they must agree bit for bit on what a brace's
 identity is. [vscode/README.md](vscode/README.md#the-same-braces-in-both-editors) explains
-how that is asserted rather than hoped for.
+how that is asserted rather than hoped for; the JetBrains port checks itself against the
+same fixture.
 
 ---
 
