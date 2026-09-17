@@ -3,7 +3,8 @@
 # -> the run -> Artifacts), so nobody needs a Visual Studio build setup just to try it.
 #
 # Pushing any tag (git tag v1.2.2 && git push origin v1.2.2 — with or without the "v")
-# additionally creates a GitHub Release with all three attached.
+# additionally creates a GitHub Release with all three attached, named
+# IdentityBraces-<version>-VisualStudio.vsix, -VSCode.vsix and -JetBrains.zip.
 
 name: CI
 
@@ -120,6 +121,19 @@ jobs:
         with:
           path: dist
           merge-multiple: true
+
+      # Each build names its output after itself, which side by side in a release says nothing
+      # about which IDE a file is for. Rename them here, so local builds keep their usual
+      # names. The version is the tag, with or without a leading "v".
+      - name: Name each file after the IDE it is for
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="${TAG#v}"
+          mv dist/IdentityBraces.vsix    "dist/IdentityBraces-$version-VisualStudio.vsix"
+          mv dist/identity-braces-*.vsix "dist/IdentityBraces-$version-VSCode.vsix"
+          mv dist/identity-braces-*.zip  "dist/IdentityBraces-$version-JetBrains.zip"
+          ls -l dist
 
       # Creates the release. If one already exists for this tag — a re-run, or a tag that was
       # moved — its assets are replaced with this build's instead of failing, so a release

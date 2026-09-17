@@ -55,7 +55,7 @@ about the same time the C# takes.
 
 ## Install
 
-Download `identity-braces-<version>.zip` from the
+Download `IdentityBraces-<version>-JetBrains.zip` from the
 [latest release](https://github.com/turtleman31/Identity-Braces-IDE-Extention/releases/latest),
 then in any JetBrains IDE: **Settings → Plugins → ⚙ → Install Plugin from Disk…** and pick the
 zip. Restart when asked. It needs a 2024.1 or newer IDE.

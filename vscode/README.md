@@ -61,7 +61,7 @@ cd vscode/tools/parity && dotnet run -c Release
 
 ## Install
 
-The quick way: download `identity-braces-<version>.vsix` from the
+The quick way: download `IdentityBraces-<version>-VSCode.vsix` from the
 [latest release](https://github.com/turtleman31/Identity-Braces-IDE-Extention/releases/latest)
 and run `code --install-extension <that file>`.
 

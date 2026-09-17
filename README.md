@@ -55,7 +55,7 @@ experimental instance for debugging).
 
 ### Option 1 — double-click the VSIX (easiest, handles both VS versions)
 
-Download `IdentityBraces.vsix` from the
+Download `IdentityBraces-<version>-VisualStudio.vsix` from the
 [latest release](https://github.com/turtleman31/Identity-Braces-IDE-Extention/releases/latest),
 or build it yourself (see below) and find it at:
 
